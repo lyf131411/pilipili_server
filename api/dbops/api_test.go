@@ -4,7 +4,7 @@ import "testing"
 
 var tempvid string
 
-func clearTables()  {
+func clearTables() {
 	dbConn.Exec("truncate users")
 	dbConn.Exec("truncate video_info")
 	dbConn.Exec("truncate comments")
@@ -17,21 +17,21 @@ func TestMain(m *testing.M) {
 	clearTables()
 }
 
-func TestUserWorkFlow(t *testing.T)  {
+func TestUserWorkFlow(t *testing.T) {
 	t.Run("Add", testAddUser)
 	t.Run("Get", testGetUser)
 	t.Run("Del", testDeleteUser)
 	t.Run("Reget", testRegetUser)
 }
 
-func testAddUser(t *testing.T)  {
+func testAddUser(t *testing.T) {
 	err := AddUserCredential("chen", "cx199596")
 	if err != nil {
 		t.Errorf("Error of AddUser %v", err)
 	}
 }
 
-func testGetUser(t *testing.T)  {
+func testGetUser(t *testing.T) {
 	pwd, err := GetUserCredential("chen")
 	if pwd != "cx199596" || err != nil {
 		t.Errorf("Error of GetUser: %v", err)
@@ -39,7 +39,7 @@ func testGetUser(t *testing.T)  {
 
 }
 
-func testDeleteUser(t *testing.T)  {
+func testDeleteUser(t *testing.T) {
 	err := DelectUser("chen", "cx199596")
 	if err != nil {
 		t.Errorf("Error of DeleteUser: %v", err)
@@ -47,7 +47,7 @@ func testDeleteUser(t *testing.T)  {
 
 }
 
-func testRegetUser(t *testing.T)  {
+func testRegetUser(t *testing.T) {
 
 	pwd, err := GetUserCredential("chen")
 	if err != nil {
@@ -69,7 +69,7 @@ func TestVideoWorkFlow(t *testing.T) {
 
 func testAddVideoInfo(t *testing.T) {
 	vi, err := AddNewVideo(1, "my-video")
-	if err != nil{
+	if err != nil {
 		t.Errorf("Error of AddVideoInfo: %v", err)
 	}
 	tempvid = vi.Id
@@ -77,7 +77,7 @@ func testAddVideoInfo(t *testing.T) {
 
 func testGetVideoInfo(t *testing.T) {
 	_, err := GetVideoInfo(tempvid)
-	if err != nil{
+	if err != nil {
 		t.Errorf("Error of GetVideoInfo: %v", err)
 	}
 }
@@ -89,9 +89,9 @@ func testDeleteVideoInfo(t *testing.T) {
 	}
 }
 
-func testRegetVideoInfo(t *testing.T)  {
+func testRegetVideoInfo(t *testing.T) {
 	vi, err := GetVideoInfo(tempvid)
-	if err != nil || vi != nil{
+	if err != nil || vi != nil {
 		t.Errorf("Error of ReGetVideoInfo: %v", err)
 	}
 }

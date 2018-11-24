@@ -14,7 +14,7 @@ func RegisterHandlers() *httprouter.Router {
 	return router
 }
 
-func main()  {
+func main() {
 	r := RegisterHandlers()
 	http.ListenAndServe("127.0.0.1:8000", r)
 }

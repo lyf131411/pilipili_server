@@ -14,14 +14,14 @@ func AddUserCredential(loginName string, pwd string) error {
 		return err
 	}
 	_, err = stmtIns.Exec(loginName, pwd)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	defer stmtIns.Close()
 	return nil
 }
 
-func GetUserCredential(loginName string) (string, error)  {
+func GetUserCredential(loginName string) (string, error) {
 	stmtOut, err := dbConn.Prepare("SELECT pwd FROM users WHERE login_name = ?")
 	if err != nil {
 		log.Printf("%s", err)
@@ -34,7 +34,7 @@ func GetUserCredential(loginName string) (string, error)  {
 		return "", err
 	}
 	defer stmtOut.Close()
-	return  pwd, nil
+	return pwd, nil
 }
 
 func DelectUser(loginName string, pwd string) error {
@@ -48,22 +48,22 @@ func DelectUser(loginName string, pwd string) error {
 		return err
 	}
 	defer stmtDel.Close()
-	return  nil
+	return nil
 }
 
 func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 	vid, err := utils.NewUUID()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	t := time.Now()
 	ctime := t.Format("Jan 02 2006, 15:04:05")
 	stmtIns, err := dbConn.Prepare(" INSERT INTO video_info (id, author_id, name, display_ctime)VALUES(?, ?, ?, ?)")
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	_, err = stmtIns.Exec(vid, aid, name, ctime)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 	var name string
 
 	err = stmtOut.QueryRow(vid).Scan(&aid, &name, &dct)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -96,12 +96,12 @@ func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 
 func DeleteVideoInfo(vid string) error {
 	stmtDel, err := dbConn.Prepare("DELETE FROM video_info WHERE id=?")
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
-	_, err =  stmtDel.Exec(vid)
-	if err != nil{
+	_, err = stmtDel.Exec(vid)
+	if err != nil {
 		return err
 	}
 
